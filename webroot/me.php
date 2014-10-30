@@ -10,16 +10,16 @@
 include( __DIR__ . '/config.php');
 
 // skapar en instans av tango
-$tango = new tango();
+$tango = new CTango();
 
 //fyller $tango med lite data ...
 
 $tango->set_property('title', "Tango, websidor som en dans");
 $tango->set_property('title_append', "En webmall skapad på kursen ooophp på BTH");
 
-$header = "<img class='sitelogo' src='" . $tango->logo() . "' />";
-$header .= "<span class='sitetitle'>" . $tango->title() . "</span>";
-$header .= "<span class='siteslogan'>" . $tango->title_append() . "</span>";
+$header = "<img class='sitelogo left' src='" . $tango->logo() . "' />";
+$header .= "<div class='sitetitle left'>" . $tango->title() . "</div>";
+$header .= "<div class='siteslogan left'>" . $tango->title_append() . "</div>";
 
 $tango->set_property('header', $header);
 $tango->set_property('main', <<<EOD
