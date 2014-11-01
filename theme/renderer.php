@@ -5,7 +5,7 @@
  */
  
 // Include the template functions.
-include(__DIR__ . '/functions.php');
+include_once(__DIR__ . '/functions.php');
  
 // Include the template file.
-include(__DIR__ . '/index.tpl.php');
+include_once(__DIR__ . '/index.tpl.php');

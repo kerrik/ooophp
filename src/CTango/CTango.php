@@ -11,6 +11,7 @@ class CTango{
     private $lang = "sv";
     private $favicon = "";
     private $style = array("css/style.css");
+    private $embed_style = "";
     
     private $modernizr = 'js/modernizr.js';
     private $jquery = '';
@@ -79,6 +80,15 @@ EOD
     foreach($this->style as $val){
         $head .= "<link rel='stylesheet' type='text/css' href='$val'/>\n";
     }
+    if($this->embed_style){
+        $head .= <<<EOD
+                <style media="screen" type="text/css">
+                    <!--
+                    $this->embed_style
+                    -->
+                </style>
+EOD
+    ;}
     if($this->modernizr){
         $head .= <<<EOD
            <script src='$this->modernizr'></script>
@@ -122,6 +132,9 @@ EOD
             break;
             case 'style':
                 $this->style =$value; 
+                break;
+            case 'embed_style':
+                $this->embed_style =$value; 
                 break;
             case 'title':
                 $this->title =$value; 

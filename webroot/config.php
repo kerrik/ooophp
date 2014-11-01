@@ -1,5 +1,5 @@
 <?php
-// Configfile For Loke
+// Configfile For tango
 
 // Error reporting
 // 
@@ -24,7 +24,9 @@ define('TANGO_THEME_PATH', TANGO_INSTALL_PATH.'/theme/renderer.php');
 
 include_once (TANGO_INSTALL_PATH . '/src/bootstrap.php');
 
-tangoAutoloader('CTango');
+// Pga behov av funktionerna dump() och print_a tidigare i processen vid utveckling ...
+include_once (TANGO_INSTALL_PATH . '/theme/functions.php');
+
  
 /**
  * 
@@ -38,13 +40,16 @@ session_start();
 
 // skapar en instans av tango
 $tango = new CTango();
+$dice = new CDice();
+
 $main_menu = array(
     'id'=>'',
     'vertical'=>false,
     'choise'=>array(
         'home'  => array('text'=>'Home',  'url'=>'me.php?p=home', 'class'=>''),
-        'away'  => array('text'=>'Källkod',  'url'=>'source.php?p=away', 'class'=>''),
-        'about' => array('text'=>'About', 'url'=>'?p=about', 'class'=>''),
+       'dice' => array('text'=>'Dice', 'url'=>'dice.php?p=dice', 'class'=>''),
+       'source'  => array('text'=>'Källkod',  'url'=>'source.php?p=source', 'class'=>''),
+        
     )
 );
 

@@ -167,3 +167,12 @@ nav#pagemenu a#selected {
     color:#f5f5f5;
     background:#999999;
 }
+.spelplan{
+    float: left;
+    width: 45%;
+    height: 40em;
+    padding: 1em;
+    margin: 1em;
+    border-color: #333;
+    border-style: solid;
+}
