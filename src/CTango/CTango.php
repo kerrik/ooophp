@@ -1,9 +1,9 @@
 <?php
 
 /**
- * 
+ *
  * Skapar tangoobjektet
- * 
+ *
  */
 
 class CTango{
@@ -12,7 +12,7 @@ class CTango{
     private $favicon = "";
     private $style = array("css/style.css");
     private $embed_style = "";
-    
+
     private $modernizr = 'js/modernizr.js';
     private $jquery = '';
     private $javascript_include = array();
@@ -22,59 +22,59 @@ class CTango{
     private $title = "";
     private $title_append = "";
     private $logo = "img/logo.jpg";
-    
+
     // Här kommer variablerna för sidinnehåll
-    
+
     private $header = "";
     private $main = "";
     private $footer = "";
-    private $side = array(); 
-    
-    
+    private $side = array();
+
+
     public function __construct(){
         $this->set_property('favicon', 'favicon.ico');
         $this->set_property('jquery', false);
     }
-    
+
     public function lang(){
-        return $this->lang;        
+        return $this->lang;
     }
      public function favicon(){
-        return $this->favicon;        
-    } 
+        return $this->favicon;
+    }
     public function style(){
-        return $this->style;        
-    } 
+        return $this->style;
+    }
     public function title(){
-        return $this->title;        
-    } 
+        return $this->title;
+    }
     public function title_append(){
-        return $this->title_append;        
-    } 
+        return $this->title_append;
+    }
     public function logo(){
-        return $this->logo;        
-    } 
+        return $this->logo;
+    }
     public function header(){
         if(!$this->header){
-            $this->header = "<img class='sitelogo left' src=' $this->logo' alt=''/>";
-            $this->header .= "<div class='sitetitle left'>$this->title</div>";
-            $this->header .= "<div class='siteslogan left'>$this->title_append</div>";
+            $this->header = "<img class='sitelogo left' src=' $this->logo' alt=''/>\n";
+            $this->header .= "<div class='sitetitle left'>$this->title</div>\n";
+            $this->header .= "<div class='siteslogan left'>$this->title_append</div>\n";
         }
-        return $this->header;        
-    } 
+        return $this->header;
+    }
     public function main(){
-        return $this->main;        
+        return $this->main;
     }
     public function footer(){
-        return $this->footer;        
-    } 
+        return $this->footer;
+    }
     public function head(){
     $head  = <<<EOD
-         <html class='no-js' lang="$this->lang">
-        <head>
-        <meta charset='utf-8'/>
-        <title>$this->title</title>
-        $this->favicon        
+<html class='no-js' lang="$this->lang">
+<head>
+    <meta charset='utf-8'/>
+    <title>$this->title</title>
+$this->favicon
 EOD
     ;
     foreach($this->style as $val){
@@ -82,30 +82,30 @@ EOD
     }
     if($this->embed_style){
         $head .= <<<EOD
-                <style media="screen" type="text/css">
-                    <!--
-                    $this->embed_style
-                    -->
-                </style>
+<style media="screen" type="text/css">
+    <!--
+    $this->embed_style
+    -->
+</style>
 EOD
     ;}
     if($this->modernizr){
         $head .= <<<EOD
-           <script src='$this->modernizr'></script>
+<script src='$this->modernizr'></script>
 EOD
         ;
     }
     $head .= '</head>';
      return $head;
     }
-    
-    
+
+
     public function scripts_footer(){
         $scripts_footer = $this->jquery;
         if(isset($this->javascript_include)){
             foreach($this->javascript_include as $val){
                 $scripts_footer .= "<script src='$val'></script>";
-            }   
+            }
         }
         if($this->google_analytics){
             $scripts_footer .=<<<EOD
@@ -115,63 +115,68 @@ EOD
                     g.src=('https:'==location.protocol?'//ssl':'//www')+'.google-analytics.com/ga.js';
                     s.parentNode.insertBefore(g,s)}(document,'script'));
                     </script>
-                    
+
 EOD
             ; // endif
         }
         return $scripts_footer;
 }
-    
+
+public function main_content($content){
+    $this->main .= $content;
+    //dump($this->main);
+}
+
      public function set_property($property, $value){
-        switch ($property){ 
+        switch ($property){
             case 'lang':
-                $this->lang =$value; 
+                $this->lang =$value;
                 break;
             case 'favicon':
                 $this->favicon = (file_exists($value)? "<link rel='shortcut icon' href='favicon.ico'/>\n" : "");
             break;
             case 'style':
-                $this->style =$value; 
+                $this->style =$value;
                 break;
             case 'embed_style':
-                $this->embed_style =$value; 
+                $this->embed_style =$value;
                 break;
             case 'title':
-                $this->title =$value; 
+                $this->title =$value;
                 break;
             case 'title_append':
-                $this->title_append =$value; 
+                $this->title_append =$value;
                 break;
             case 'logo':
-                $this->logo =$value; 
+                $this->logo =$value;
                 break;
             case 'header':
-                $this->header =$value; 
+                $this->header =$value;
                 break;
             case 'main':
-                $this->main =$value; 
+                $this->main =$value;
                 break;
             case 'footer':
-                $this->footer =$value; 
+                $this->footer =$value;
                 break;
             case 'side':
-                $this->side =$value; 
+                $this->side =$value;
                 break;
             case 'modernizr':
-                $this->modernizr =$value; 
+                $this->modernizr =$value;
                 break;
             case 'jquery':
-                $this->jquery =($value?"<script src='//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js'></script>\n":""); 
+                $this->jquery =($value?"<script src='//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js'></script>\n":"");
                 break;
             case 'javascript_include':
-                $this->javascript_include =$value; 
+                $this->javascript_include =$value;
                 break;
             default:
                 echo 'Värdet finns inte';
         }
-        
+
     }
-    
+
     public static function menu($items) {
         $id = (!$items['id']?'pagemenu':$items[id]);
         $vertical= ($items['vertical']?'<br>':'');

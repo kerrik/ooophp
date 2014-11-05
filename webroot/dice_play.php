@@ -3,9 +3,7 @@
  * 
  * Tango är en struktur för websidor skapad på kursen ooophp av mig
  * Peder Nordenstad.
- */
-
-// Ikluderar config.php. som sätter igång allt.
+ */// Ikluderar config.php. som sätter igång allt.
 
 include( __DIR__ . '/config.php');
 
@@ -44,32 +42,31 @@ $tango->set_property('title_append', "Ett tärningsspel för en eller flera");
 //$header .= "<div class='siteslogan left'>" . $tango->title_append() . "</div>\n";
 //$tango->set_property('header', $header);
 
-$tango->main_content(<<<EOD
-        <h1>Spela 100. Ensam eller mot en motståndare</h1>
-        <div class='spelplan'>
-            <p>Dice är ett spel där det gäller att komma upp så när 100 poäng utan att passsera
-            100. Du kan spela en eller flera spelare.
-            </p>
-            <p>
-            Varje rond kan du välja mellan att spela med en, två eller tre tärningar.
-            Du kan också stå välja att stå över, men bara en rond, du måste spela nästa.
-            </p>   
+$tango->main_content( " <div class='spelplan'>");        
+$tango->main_content( "<h1>" . $dice->player() . " spelare rond nr " .$dice->rond() . ".</h1>\n" ); 
 
-
-            <p><a href='dice_play.php?antal=1'>Ensam</a>
-                <a href='dice_play.php?antal=2'>Två</a>
-                <a href='dice_play.php?antal=3'>Tre</a>
-                <a href='dice_play.php?antal=4'>Fyra</a>
-            </p>
-        </div><!-- spelplan -->
-   
+if(isset($_GET['slag'])){
+    $tango->main_content($dice->spelare_slar()); //end EOD
+}  else {
+    
+    $tango->main_content(<<<EOD
+       
+        <div class='slag'>
+        <p><a href='dice_play.php?p=dice&slag=1'>Slå en tärning></a></p>
+        <p><a href='dice_play.php?p=dice&slag=2'>Slå två tärningar></a></p>
+        <p><a href='dice_play.php?p=dice&slag=3'>Slå tre tärning></a></p>
+        <p><a href='dice_play.php?p=dice&slag=0'>Stå över></a></p>
+        <p>
+            </div>
+            </div>
 EOD
 ); //end EOD
+}
 
-//$tango->main_content( $dice->monitor(0) . '</p></div>');
-        
+
 
 // $dice_screen .= "<p><a href='dice.php?p=dice&rensa'>Börja om></a></p>";  
+
 
 $tango->set_property('footer', <<<EOD
         <div class='sitefooter left'>
@@ -80,8 +77,6 @@ $tango->set_property('footer', <<<EOD
         </div>
 EOD
 );
-
-
 
 include_once (TANGO_THEME_PATH);
         

@@ -93,7 +93,8 @@ header,footer,nav,article,section,aside,figure,figcaption {
 #main {
   float: left;
   padding: 0 6em 1em 6em; 
-  
+  min-width: 70em;
+  /*max-width: 70em;*/
   min-height: 20em;
 }
 .text{    
@@ -169,10 +170,41 @@ nav#pagemenu a#selected {
 }
 .spelplan{
     float: left;
-    width: 45%;
+    min-width: 41%;
+    max-width: 41%;
     height: 40em;
     padding: 1em;
-    margin: 1em;
+    margin: 1em 0.3em 1em 0;
     border-color: #333;
     border-style: solid;
 }
+
+.slag{
+    float: left;
+    min-width: 41%;
+    max-width: 41%;
+    border-color: #333;
+    border-style: solid;
+}
+
+ul.dice {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+ul.dice li {
+  display: inline-block;
+  padding: 0;
+  margin: 0 4px 0 0;
+  width: 32px;
+  height: 32px;
+  background: url(img/dice-faces.jpg) no-repeat;
+}
+
+ul.dice li.dice-1 { background-position: -160px 0px; }
+ul.dice li.dice-2 { background-position: -128px 0px; }
+ul.dice li.dice-3 { background-position:  -96px 0px; }
+ul.dice li.dice-4 { background-position:  -64px 0px; }
+ul.dice li.dice-5 { background-position:  -32px 0px; }
+ul.dice li.dice-6 { background-position:    0px 0px; }

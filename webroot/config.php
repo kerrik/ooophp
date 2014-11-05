@@ -47,7 +47,8 @@ $main_menu = array(
     'vertical'=>false,
     'choise'=>array(
         'home'  => array('text'=>'Home',  'url'=>'me.php?p=home', 'class'=>''),
-       'dice' => array('text'=>'Dice', 'url'=>'dice.php?p=dice', 'class'=>''),
+       'dice' => array('text'=>'Dice', 'url'=>'dice.php?p=dice&amp;rensa', 'class'=>''),
+       'Om' => array('text'=>'Om', 'url'=>'om.php?p=om', 'class'=>''),
        'source'  => array('text'=>'Källkod',  'url'=>'source.php?p=source', 'class'=>''),
         
     )
