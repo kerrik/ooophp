@@ -30,8 +30,17 @@ h1{
 h2{
   font-size: 1.5em;
 }
+h3{
+  font-size: 1.5em;
+}
+h4{
+  font-size: 1.5em;
+}
+h5{
+  font-size: 1.5em;
+}
 p{
-  font-size: 1rem;
+  font-size: 0.9rem;
 }
 
 /* html5 elements
@@ -99,6 +108,9 @@ header,footer,nav,article,section,aside,figure,figcaption {
 }
 .text{    
   font-family: "Palatino Linotype", "Book Antiqua", Palatino, serif;
+  float: left;
+  padding-left:  2em;
+  padding-right: 4em
 }
  
  
@@ -199,7 +211,7 @@ ul.dice li {
   margin: 0 4px 0 0;
   width: 32px;
   height: 32px;
-  background: url(img/dice-faces.jpg) no-repeat;
+  background: url('../img/dice-faces.jpg') no-repeat;
 }
 
 ul.dice li.dice-1 { background-position: -160px 0px; }

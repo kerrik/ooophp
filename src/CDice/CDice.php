@@ -1,129 +1,95 @@
 <?php
 class CDice {
-    private $slag = array('', '');
-    private $spelare = "";
-    private $antal_spelare = 0;
-    private $aktiv_spelare = 1;
-    private $rond="1";
-    private $dump;
+    public $resultat_slag = 0;
+    private $antal_slag = 0;
+    public $score = 0;
+    public $sparat = 0;
     
-public function __construct() {
-        if( isset( $_GET['rensa'])){
-            $this->rensa_variabler();
-        }
-        
-        if(isset( $_SESSION['spelare']) && !isset($_GET['rensa']) && $_SESSION['antal_spelare']){
-            $this->hamta_data_fran_sesson();
-        }elseif (isset($_GET['antal'])){
-            $this->startvarden_for_variabler();
-        }  else {
-            
-            $_SESSION['spelare'] = null ;
-            $_SESSION['aktiv_spelare'] = null;  
-            $_SESSION['antal_spelare']=  null;
-            $_SESSION['slag']=  null;
-            $_SESSION['rond'] = 1;
-            $_SESSION['pass']= false;
-        }
-        if(isset($_GET['slag']) && $_SESSION['slag']){
-            $this->slag();
-        }
-        //dump($_SESSION    );
-       //print_a($this->spelare);*/
-    }
     
-    private function rensa_variabler(){
-            session_unset();
-            $_SESSION['spelare'] = null;
-            $_SESSION['antal_spelare']=null;
-            $_SESSION['slag']=null; 
-    }
-    
-    private function hamta_data_fran_sesson(){
-        $this->spelare = unserialize($_SESSION['spelare']);
-        $this->rond= $_SESSION['rond'];
-        if(isset($_SESSION['aktiv_spelare'])){
-            $this->aktiv_spelare = $_SESSION['aktiv_spelare'];
-        }  else {
-            $this->aktiv_spelare=1;
+    public function __construct() {
+        if (isset($_SESSION['score'])){
+            $this->score = $_SESSION['score'];
         }
-    }
-    private function startvarden_for_variabler(){
-        $this->spelare[1] =array( 'namn' =>'Gron','total'=>0, 'pass'=> null , 'slag'=> array(1,2,4,3,6,5));
-        $this->spelare[2] =array( 'namn'=>'Rod', 'total'=>0, 'pass'=> null , 'slag'=> array(2,4,2,3,6,2));
-        $this->spelare[3] =array( 'namn' =>'Bla','total'=>0, 'pass'=> null , 'slag'=> array(5,4,6,7,3,1));
-        $this->spelare[4] =array( 'namn'=>'Gul', 'total'=>0, 'pass'=> null , 'slag'=> array(6,6,6,4,5,3));
-        $this->aktiv_spelare = 1;
-        $_SESSION['antal_spelare']= $_GET['antal'];
-    }
+        if (isset($_SESSION['sparat'])){
+            $this->score = $_SESSION['sparat'];
+        }
+
+       
+    }    
+   public function main(){
+       $main_content= <<<EOD
+            <h1>Spela 100!</h1>
+            <p>Kasta tärningen och få 100 poäng! Slag på 2-6 ger 2-6 poäng, slår du en etta får du börja om.
+            Trycker på stanna så är kommer de poäng du har att sparas. När du fortsätter spelet går
+                du bara tillbaka till dina sparade poäng. 
+            du spela med dina sparade poäng.
+            </p>
+  
+EOD
+             ; //end EOD             
+        $main_content .= '<form method="get" action="">';
+            $main_content .= '<input type="submit" value="Kasta tärningen" class="button left" name="dice_button"/>';
+            $main_content .= '</form>';
+            $main_content .= '<form method="get" action="">';
+            $main_content .= '<input type="submit" value="Spara" class="button left" name="dice_stop"/>';
+            $main_content .= '</form>';
+            $main_content .= '<form method="get" action="">';
+            $main_content .= '<input type="submit" value="Börja om" class="button left" name="reset"/>';
+            $main_content .= '<div id="dice">';
+            if (isset($_GET['dice_button'])){
+                $this->resultat_slag = $this->sla_tarnining();
+                $main_content .= "<ul class='dice'><li class='dice-$this->resultat_slag'></li>'</ul>\n";
+                if ($this->resultat_slag==1){
+                    $main_content .= "<br>Du slog en etta och förlorade dina poäng!<br>";
+                    if (isset($_SESSION['saved'])){
+                        $this->rensa_summan();
+                        $this->score = $this->sparat;
+                    }
+                    else{
+                        $this->rensa_summan();
+                    }    
+                }
+                else{
+                    $this->score += $this->resultat_slag;
+                    $main_content .= "<br>Du slog  $this->resultat_slag<br>";
+                }
+                $main_content .= "<br>Summa $this->score<br>";
+            }
+            if ($this->score >=100){
+                $main_content .= "<br>GRATTIS DU VANN!!!";
+               // $this->ResetAll();
+            }
+
+            if (isset($_GET['dice_stop'])) {
+                $this->sparat += $this->score;
+                $this->sparat = $this->score;
+            }
+
+            if (isset($_GET['reset'])) {
+                $this->rensa_summan();
+                $this->resultat_slag = 0;
+            }
+                $main_content .= '<br><br>Sparat (startpunkt) ' .$this->sparat;
+
+            $main_content .='</div>';
 
 
-    public function monitor(){
-        if ($_GET['slag']==0){            
-            $return=  "<h2>Du valde att passa. Det går bra, men du måste spela nästa omgång.</h2>";
-        }else{
-           $return=  $this->spelare_slår();
-            $_SESSION['pass'] = false;                    
-        }
-        $return .= "<p><a href='dice_play.php?p=dice'>Fortsätt</a></p>";
-        $this->uppdatera_diverse_variabler();
-        return htmlentities($return);
-    }
-    
-    public function spelare_slar(){        
-        $alla_slag=$this->spelare[$this->aktiv_spelare]['slag'][$this->rond -1]; 
-        
-       // print_a($alla_slag);
-        $summa_ronder=0;
-        $listar_ronder='';
-        $summa_slag = array_sum($alla_slag);
-        $return = "<ul class='dice'>";
-        foreach ( $alla_slag as $rond){            
-           $return .= "<li class='dice-$rond'></li>\n";
-        }
-        $return .= '</ul><h3>Du fick ' . $summa_slag . ' poäng den här ronden</h3>';
-        $return .= "<h3>Du har nu " .$this->spelare[$this->aktiv_spelare]['total'] . " poäng</h3>";
-        return ($return);
-    }
-    
-    private function uppdatera_diverse_variabler(){
-        if(!$_SESSION['slag']){
-            $this->aktiv_spelare= ($this->aktiv_spelare< $_SESSION['antal_spelare']?  ++$this->aktiv_spelare:1);  
-            $_SESSION['rond'] = ($this->aktiv_spelare == $_SESSION['antal_spelare']? ++$_SESSION['rond']:$_SESSION['rond']);
-        }
-    }
-    
-    private function slag(){
-        $slag=array();
-        for ($i=0; $i<$_GET['slag']; ++$i){
-            $slag[]= rand(1,6);
             
-        }
-        
-        $this->spelare[$this->aktiv_spelare]['total'] += array_sum($slag) ;
-        $this->spelare[$this->aktiv_spelare]['slag'][] = $slag ;
-    }
-    
- 
-    public function player(){
-        return $this->spelare[$this->aktiv_spelare]['namn'];
-    }
-    
-    public function rond(){
-        return $this->rond;
-    }
-    public function passa(){
-        $pass= ($_SESSION['pass']?' STYLE="visibility: hidden"':'');
-    }               
-    
-    public function __destruct(){
-        $_SESSION['spelare'] = serialize($this->spelare);
-        $_SESSION['slag']=(isset($_GET['slag']) && $_SESSION['slag']?false:true);
-        $_SESSION['aktiv_spelare']= $this->aktiv_spelare;
-    }
+            
+            
+            
+       return $main_content;
+   }
+   
+   private function sla_tarnining(){
+       return rand(1, 6);
+   }   
+   public function __destruct() {
+        $_SESSION['score'] = $this->score;
+   }
+   private function rensa_summan(){       
+        $this->score = 0;
+   }
    
 } // end class
 
-
-
-   

@@ -8,6 +8,7 @@
             </div><!-- header -->
             <div id='main'>
                 <?=$tango->main()?>
+                
             </div><!-- main -->
             <footer id='footer'>
                 <?=$tango->footer()?>

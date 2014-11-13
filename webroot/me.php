@@ -62,44 +62,6 @@ $tango->set_property('main', <<<EOD
         <p >Information hämtar
         jag nog i första hand från PHP-manualen på nätet
         och w3schools.com.</p>
-        <p >Som framgår
-        av ovanstående gick guiden ganska snabbt att gå igenom.
-        Några guldklimpar hittade jag. &lt;? ?&gt;, &lt;?= ?&gt; är
-        underbara, heredoc har jag heller aldrig testat tidigare.</p>
-        <p >Min webmall
-        heter tango. Namnvalet var för mig självklart. Argentinsk
-        tango är en improviserad pardans utan begränsningar, bara
-        möjligheter, där man ständigt strävar efter
-        förfining och perfektion, utveckling av det som finns och jakt
-        efter nya möjligheter. </p>
-        <p >En dans där
-        man ständigt dansar med nya partners och därigenom måste
-        vara flexibel för att kunna ge tillfredställelse.</p>
-        <p >Strukturen i
-        Anax ... behöll jag med några få avsteg. Min första
-        tanke var: Array? Varför inte en klass. Det ger mig större
-        möjligheter. </p>
-        <p >Så i
-        tango styrs det mesta från klassen Ctango, som vill bli matat
-        med info. Dock finns redan defaultvärden på många
-        för att minska arbetet.  Alla variabler är interna, man får
-        gå via metoder för att komma åt dem. Jag vill ha
-        kommandot. Kontrollfreak? Javisst.</p>
-        <p >I
-        index.tpl.php finns ingen kod, bara anrop till de funktioner som ger
-        utskriften. Som default skapas &lt;head&gt; av klassen, men möjlighet
-        finns givetvis att skapa en egen i sidmallen och skicka in i klassen
-        för utskrift. 
-        </p>
-        <p>Det som inte
-        fungerar är att koppla flera stylesheets till klassen för
-        länkning, det kommer, måste dock sätta igång
-        med nästa kurs medan tid är.</p>
-        <p >Source.php
-        fungerade bra att inkludera, med lite fix i surce.css så det
-        gick ihop med min övriga sida.</p>
-        <p >Koden finns på
-        github, länk ner till höger på sidan.</p>
         </div>
 EOD
 );

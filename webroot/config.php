@@ -40,15 +40,36 @@ session_start();
 
 // skapar en instans av tango
 $tango = new CTango();
-$dice = new CDice();
+
+
+
+    
+/**
+ * Om siten ska ha databas, sätt $use_db till true
+ */
+
+$use_db = true;
+
+if ($use_db){
+    
+    // Först skapar vi en array för att föra in inloggningsuppgifter i databasklassen
+    $db_connect['dsn']            = 'mysql:host=ooophp-159065.mysql.binero.se;dbname=159065-ooophp;';
+    $db_connect['username']       = '159065_uk11396';
+    $db_connect['password']       = 'L0s3n0rd';
+    $db_connect['driver_options'] = array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES 'UTF8'");
+   
+    //sedan en ny instans av den
+    $db = new CDatabase($db_connect);
+}
 
 $main_menu = array(
     'id'=>'',
     'vertical'=>false,
     'choise'=>array(
         'home'  => array('text'=>'Home',  'url'=>'me.php?p=home', 'class'=>''),
-       'dice' => array('text'=>'Dice', 'url'=>'dice.php?p=dice&amp;rensa', 'class'=>''),
-       'Om' => array('text'=>'Om', 'url'=>'om.php?p=om', 'class'=>''),
+       'dice' => array('text'=>'Dice', 'url'=>'dice.php?p=dice', 'class'=>''),
+       'red' => array('text'=>'Redovisning', 'url'=>'redovisning.php?p=red', 'class'=>''),
+       'om' => array('text'=>'Om', 'url'=>'om.php?p=om', 'class'=>''),
        'source'  => array('text'=>'Källkod',  'url'=>'source.php?p=source', 'class'=>''),
         
     )
