@@ -14,13 +14,18 @@
 class CDatabase {
     private $db = null;
     private $options = null;
+    Private $stm = null;
+    private static $num_queries = 0;     // räknare fär SQL-queries
+    private static $sql = array();  // Spara alla queries för felsökning
+    private static $parametrar = array();   // Spara parametrar för felsökning
+ 
     
     
-    
-    public function __construct($db_setup) {
-       $this->DB_open($db_setup); 
-    
-    }
+public function __construct($db_setup) {
+   $this->DB_open($db_setup); 
+   $this->create_db();
+
+}
 public function DB_open($db_setup){
     $db_default = array(
         'dsn' => null,
@@ -38,6 +43,39 @@ public function DB_open($db_setup){
     }
 
     $this->db->SetAttribute(PDO::ATTR_DEFAULT_FETCH_MODE,  $this->options['fetch_style']);
+   
 } //end DB_open
+     
+public function query_DB( $sql, $parametrar = array(), $debug = false ){
+    self::$sql[] = $sql;
+    self::$parametrar = $parametrar;
+    self::$num_queries++;
     
+    if($debug){
+        echo "<p>$sql= <br><pre>{$sql}</pre></p><p> Number $sql= " . self::$num_queries . "</p><p><pre>" . print_r($parametrar, 1) . "</pre></p>";
+      }
+    $this->stm = $this->db->prepare($sql);
+    $this->stm->execute($parametrar);
+    return $this->stm->fetchAll();
+}//end queryDB
+private function create_db(){
+    global $dbcreate;
+    $sql = '';
+    foreach($dbcreate as $query){
+        $sql .= "DROP " . $query['type'] . " IF EXISTS " . $query['name'] .  ";";
+        $sql .= $query['sql'];
+        $sql .= ($query['data']?$query['data']:null);
+        $this->query_DB($sql);
+        $sql = '';
+    }
+}
+
+public function dump() {
+    $html  = '<p><i>You have made ' . self::$numQueries . ' database queries.</i></p><pre>';
+    foreach(self::$queries as $key => $val) {
+      $params = empty(self::$params[$key]) ? null : htmlentities(print_r(self::$params[$key], 1)) . '<br/></br>';
+      $html .= $val . '<br/></br>' . $params;
+    }
+    return $html . '</pre>';
+  }//end Dump 
 } //End class
