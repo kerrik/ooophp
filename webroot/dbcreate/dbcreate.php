@@ -12,7 +12,7 @@ EOF
  */
 
 $dbcreate[] = array('type'=>'TABLE', 'name'=>'Movie' , 'sql'=> <<<EOF
-  CREATE TABLE Movie
+  CREATE TABLE IF NOT EXISTS Movie
   (
     id INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
     title VARCHAR(100) NOT NULL,
@@ -54,7 +54,7 @@ EOF
 EOF
     ); //end $dbcreate
 $dbcreate[] = array('type'=>'TABLE', 'name'=>'Movie2Gengre' , 'sql'=> <<<EOF
-  CREATE TABLE NOT EXISTS Movie2Genre
+  CREATE TABLE IF NOT EXISTS Movie2Genre
 (
   idMovie INT NOT NULL,
   idGenre INT NOT NULL,
@@ -89,7 +89,7 @@ EOF
     ); //end $dbcreate
 
 $dbcreate[] = array('type'=>'VIEW', 'name'=>'VMovie' , 'sql'=> <<<EOF
-    CREATE VIEW NOT EXISTS VMovie
+    CREATE VIEW VMovie
 AS
 SELECT 
   M.*,
@@ -105,7 +105,7 @@ EOF
     , 'data'=> null
  ); //end $dbcreate
 $dbcreate[] = array('type'=>'TABLE', 'name'=>'User' , 'sql'=> <<<EOF
-    CREATE TABLE USER
+    CREATE TABLE IF NOT EXISTS User 
 (
   id INT AUTO_INCREMENT PRIMARY KEY,
   acronym CHAR(12) UNIQUE NOT NULL,
@@ -115,12 +115,12 @@ $dbcreate[] = array('type'=>'TABLE', 'name'=>'User' , 'sql'=> <<<EOF
 ) ENGINE INNODB CHARACTER SET utf8;
 EOF
 , 'data'=> <<<EOF
-INSERT INTO USER (acronym, name, salt) VALUES 
+INSERT INTO User (acronym, name, salt) VALUES 
     ('doe', 'John/Jane Doe', unix_timestamp()),
     ('admin', 'Administrator', unix_timestamp())
 ;
-UPDATE USER SET password = md5(concat('doe', salt)) WHERE acronym = 'doe';
-UPDATE USER SET password = md5(concat('admin', salt)) WHERE acronym = 'admin';
+UPDATE User SET password = md5(concat('doe', salt)) WHERE acronym = 'doe';
+UPDATE User SET password = md5(concat('admin', salt)) WHERE acronym = 'admin';
      
 EOF
     ); //end $dbcreate

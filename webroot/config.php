@@ -49,6 +49,7 @@ $tango = new CTango();
  */
 
 $use_db = true;
+$use_login = true;
 
 if ($use_db){
     
@@ -62,6 +63,7 @@ if ($use_db){
     include_once 'dbcreate/dbcreate.php';
     $db = new CDatabase($db_connect);
 }
+if ($use_login){ $user = new CUser;}
 
 $main_menu = array(
     'id'=>'',

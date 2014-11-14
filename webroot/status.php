@@ -9,7 +9,6 @@
 
 include( __DIR__ . '/config.php');
 
-
 //fyller $tango med lite data att skriva ut...
 
 $tango->set_property('title', "Tango, webbsidor som en dans");
@@ -26,31 +25,20 @@ $tango->set_property('title_append', "En webmall skapad på kursen ooophp på BT
 //$header .= "<div class='siteslogan left'>" . $tango->title_append() . "</div>\n";
 //$tango->set_property('header', $header);
 
-//$result = "databaskörning";
-$test = array();
-$sql = "SELECT * FROM Movie";
-$result = $db->query_DB($sql);
 
-$tr = "<tr><th>Rad</th><th>Id</th><th>Bild</th><th>Titel</th><th>År</th></tr>";
-foreach($result AS $key => $val) {
-    dump($val);
-  $tr .= "<tr><td>{$key}</td><td>{$val->id}</td><td><img width='80' height='40' src='{$val->image}' alt='{$val->title}' /></td><td>{$val->title}</td><td>{$val->YEAR}</td></tr>";
-}
+if( $user->logincheck()){    
+    $tango->main_content("<p>Du &auml;r inloggad som " . $user->name() . " </p>"); 
+}else{
+    $tango->main_content( <<<EOD
+        <p><em>Du är inte inloggad.</em></p>
+        <p>Kila iväg till inloggningssidan och logga in först. </p>
+        <p>Den sidan kan hantera både in och utloggning ...</p>
+        <a href='login.php'>Till inloggning</a>
+    </form>
 
-
-// Do it and store it all in variables in the Anax container.
-
-$tango->set_property('title', "Koppla upp PHP PDO mot MySQL");
-
-$tango->set_property('main', <<<EOD
-<h1>Resultatet från SQL-frågan</h1>
-<p>Resultatet från SQL-frågan:</p>
-<p><code>{$sql}</code></p>
-<table>
-{$tr}
-</table>
 EOD
-);
+);} //end EOD end IF
+
 include_once 'footer.php';
 include_once (TANGO_THEME_PATH);
         

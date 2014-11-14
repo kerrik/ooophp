@@ -220,3 +220,10 @@ ul.dice li.dice-3 { background-position:  -96px 0px; }
 ul.dice li.dice-4 { background-position:  -64px 0px; }
 ul.dice li.dice-5 { background-position:  -32px 0px; }
 ul.dice li.dice-6 { background-position:    0px 0px; }
+
+#logout{
+    border-style: none;
+    font-family: arial,sans-serif;
+    font-size: 12px;
+    text-decoration: underline;
+}
