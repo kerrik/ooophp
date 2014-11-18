@@ -33,7 +33,7 @@ $tango->main_content(<<<EOD
 EOD
 ); //end main_content
 
-if( $user->logincheck()){    
+if( $user->logincheck(true)){    
     $tango->main_content("<p><input type='submit' name='logout' value='Logout'/></p>");
 }else{
     $tango->main_content( <<<EOD

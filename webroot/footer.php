@@ -1,5 +1,4 @@
 <?php
-dump($_SESSION);
 if($user->logincheck()){
     $logged_in = <<<EOF
         <form method=post>

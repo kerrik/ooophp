@@ -13,6 +13,7 @@ ini_set('output_buffering', 0); //Skriv felen direkt
 // Skapar sökvägar som ska användas i systemet
 
 define('TANGO_INSTALL_PATH', __DIR__ . '/..');
+define('TANGO_SOURCE_PATH', TANGO_INSTALL_PATH . '/src/');
 define('TANGO_THEME_PATH', TANGO_INSTALL_PATH.'/theme/renderer.php');
  
 
@@ -60,7 +61,7 @@ if ($use_db){
     $db_connect['driver_options'] = array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES 'UTF8'");
    
     //sedan en ny instans av den
-    include_once 'dbcreate/dbcreate.php';
+    //include_once 'dbcreate/dbcreate.php';
     $db = new CDatabase($db_connect);
 }
 if ($use_login){ $user = new CUser;}

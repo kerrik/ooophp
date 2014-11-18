@@ -227,3 +227,102 @@ ul.dice li.dice-6 { background-position:    0px 0px; }
     font-size: 12px;
     text-decoration: underline;
 }
+.label{
+    width: 10em;
+}
+.input{
+    width: 40em;
+}
+.plot{
+    width: 30em;
+    height: 20em;
+}
+.fieldrow, .fieldpic, .fieldgenre, .fieldtitle, .fieldyear, .picrubrik{    
+    float: left;
+    display: block;
+    border-width: 1px;
+    border-bottom-style: dashed; 
+    /*border-style: solid;*/
+}
+.fieldpic, .fieldgenre, .fieldtitle, .fieldyear{ 
+    min-height: 2.25em;
+    padding: 0.7em 1em 0.5em 1em;
+}
+.fieldrow{
+    clear: left;
+    min-height: 4em;
+    border: none;
+    /*border-color: red;*/
+}
+.fieldpic{
+    padding: 0;
+    width: 6.7em;
+    border: none;
+    /*border-color: green;*/
+}
+.fieldtitle{
+    width: 15em;
+    /*border-color: yellow;*/
+}
+.fieldyear{
+    width: 5em;
+    /*border-color: blue;*/
+}
+.fieldgenre{
+    width: 15em;
+    /*border-color: blueviolet;*/
+}
+.tabellrubrik{
+    min-height: 0em;
+    padding: 0em 1em 0em 1em;
+}
+.picrubrik{
+    padding: 0;
+    margin-bottom: 0.9rem;
+    width: 6.7em;
+    min-height: 0em;
+    border: none;
+    /*border-color: green;*/
+}
+.button_genre, .button_genre_press{
+    float: left;
+    text-align: center;
+    height: 1.3rem;
+    margin: 1px;
+    padding: 0.2rem 0.2rem 0;
+    min-width: 2.8rem;
+    border-style: solid;
+    border-width: 2px;
+}
+.button_genre{    
+    border-left-color: darkgrey;
+    border-bottom-color: darkgray;
+    border-top-color: white;
+    border-right-color: white;
+}
+.button_genre_press{    
+    background: lightgray;
+    border-left-color: white;
+    border-bottom-width: 1px;
+    border-top-color: white;
+    border-right-width: 0px;
+}
+.button_genre a, .button_genre_press a{
+    color: darkslategrey;
+    text-decoration: none;
+    font-size: 0.7rem;
+    font-family: arial, sans-serif;
+}
+#year1, #year2{
+    width: 10em;
+    margin-right: 1em;    
+}
+#year2{
+    margin-left:  1em;
+}
+.clear_right{
+    clear: right;
+}
+.clear_left{
+    clear: left;
+}

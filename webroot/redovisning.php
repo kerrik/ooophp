@@ -108,6 +108,44 @@ $tango->set_property('main', <<<EOD
         att kolla in den direkt, s&aring; jag kan fundera igenom ordentligt
         och inte beh&ouml;ver g&ouml;ra allt p&aring; en g&aring;ng.)</p>
         
+        <h1>Kmom04</h1>
+        <p>Ett mycket roligt
+        kursmoment med m&aring;nga utmaningar.<br>Den sista har varit att f&aring;
+        ig&aring;ng min webb-plats med SQL p&aring; BTH-s server. Jag har
+        sk&auml;ndligen misslyckats.</p>
+        <p>M&aring;nga logiska
+        utmaningar i s&ouml;kfunktionen. Hur f&aring; till att s&ouml;kstr&auml;ngen
+        finns kvar n&auml;r man &auml;ndrar val, hur skapa where-satsen.
+        Tycker jag fick till ganska snygga l&ouml;sningar &hellip;</p>
+        <p>Tabellen byggde jag
+        upp med floats ist&auml;llet f&ouml;r HTML. Jag tycker att jag f&aring;r
+        st&ouml;rre formateringsm&ouml;jligheter d&aring;.</p>
+        <p>En fundering var om
+        jag skulle bygga Cmovie som en extension p&aring; Cdatabase. Gillade
+        inte att &ouml;ppna flera anslutningar mot databasen om jag skulle
+        anv&auml;nda den p&aring; fler st&auml;llen.</p>
+        <p>Kom sedan p&aring;
+        att om jag gjorde $ db static s&aring; blir det bara en koppling.</p>
+        <p>En del annat finns
+        fixat, loginfunktion och m&ouml;jlighet att komaa in och se film mer
+        detaljerat och start p&aring; redigering/nyuppl&auml;ggning av film.
+        Bara skal &auml;n s&aring; l&auml;nge, ingen funktionalitet.</p>
+        <p>K&auml;nner att jag
+        utvecklas som programmerare av kurserna. Positivt. &Ouml;nskar jag
+        hade mer tid, dvs inte l&aring;g s&aring; mycket efter, men livet &auml;r
+        som det &auml;r. Och tar en del tid att jobba heltid 10-12 timmar
+        ut&ouml;ver detta. Suck.</p>
+        <p>Vad g&auml;ller
+        uppdatering av databasen &hellip; Funktionalitet inbyggd f&ouml;r att
+        kontrollera att tabellerna finns och skapa nya om de saknas. Finns i
+        Cdatabase.</p>
+        <p>PHP PDO är en trevlig bekantskap, jag känner att vi kommer att få en 
+            lång och trivsam relation. Vad gäller min plattform och moduler i 
+            form av classer ... så byggde jag ju platformen från början med en 
+            class som styr flödet.
+        
+        
+        
    
    </div>
         

@@ -19,16 +19,17 @@ class CUser{
         if(isset($_POST['logout'])){unset ($_SESSION['user']);}
     }//end __construct
     
-    public function logincheck(){
+    public function logincheck($redirect = false){
         if(isset($_SESSION['user'])){            
             global $db;
             $sql = "SELECT id, acronym, name FROM User WHERE id = ?;";
-            $this->user =  $db->query_DB($sql, array($_SESSION['user']), true);
+            $this->user =  $db->query_DB($sql, array($_SESSION['user']));
             $this->user = $this->user[0];
             $return = isset($this->user)? true: false ;
         }else{
             $return = false;
-        }       
+        }
+        if( $redirect ){ header('Location: login.php');} //För att uppfylla examinationskrav
         return $return;
         //return (isset($_SESSION['user'])? true:false);       
     }//end logincheck()

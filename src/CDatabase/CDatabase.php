@@ -12,7 +12,7 @@
  * @author peder
  */
 class CDatabase {
-    private $db = null;
+    static $db = null;
     private $options = null;
     Private $stm = null;
     private static $num_queries = 0;     // räknare fär SQL-queries
@@ -21,12 +21,14 @@ class CDatabase {
  
     
     
-public function __construct($db_setup) {
-   $this->DB_open($db_setup); 
-   $this->create_db();
+public function __construct() {
+   $this->DB_open(); 
+   $this->create_db( TANGO_SOURCE_PATH . 'CDatabase/dbcreate.php');
+  // $this->create_db();
 
 }
-public function DB_open($db_setup){
+public function DB_open(){
+    global $db_connect;
     $db_default = array(
         'dsn' => null,
         'username' => null,
@@ -34,15 +36,15 @@ public function DB_open($db_setup){
         'driver_options' => null,
         'fetch_style' => PDO::FETCH_OBJ,
     ); // end $db_default
-    $this->options = array_merge($db_default, $db_setup);
+    $this->options = array_merge($db_default, $db_connect);
 
-    try {$this->db = new PDO($this->options['dsn'], $this->options['username'], $this->options['password'], $this->options['driver_options']);
+    try {self::$db = new PDO($this->options['dsn'], $this->options['username'], $this->options['password'], $this->options['driver_options']);
 
     } catch (Exception $e) {
         throw new PDOException('Could not connect to database, hiding connection details.'); // Hide connection details.
     }
 
-    $this->db->SetAttribute(PDO::ATTR_DEFAULT_FETCH_MODE,  $this->options['fetch_style']);
+    self::$db->SetAttribute(PDO::ATTR_DEFAULT_FETCH_MODE,  $this->options['fetch_style']);
    
 } //end DB_open
      
@@ -54,15 +56,15 @@ public function query_DB( $sql, $parametrar = array(), $debug = false ){
     if($debug){
         echo "<p>$sql= <br><pre>{$sql}</pre></p><p> Number $sql= " . self::$num_queries . "</p><p><pre>" . print_r($parametrar, 1) . "</pre></p>";
       }
-    $this->stm = $this->db->prepare($sql);
+    $this->stm = self::$db->prepare($sql);
     $this->stm->execute($parametrar);
     return $this->stm->fetchAll();
 }//end queryDB
-private function create_db(){
-    global $dbcreate;
+    protected function create_db($path){
+    include $path;
     $sql = '';
     foreach($dbcreate as $query){
-        $sql .= "DROP " . $query['type'] . " IF EXISTS " . $query['name'] .  ";";
+        //$sql .= "DROP " . $query['type'] . " IF EXISTS " . $query['name'] .  ";";
         $sql .= $query['sql'];
         $sql .= ($query['data']?$query['data']:null);
         $this->query_DB($sql);
