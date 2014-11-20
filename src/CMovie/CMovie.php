@@ -86,6 +86,7 @@ class CMovie extends CDatabase{
     
     
     public function filter_search($search){
+        $limit = null;
         $filter = null ;
         $parameter = array();
         if( $search['genre'] <> 'alla'){
@@ -108,9 +109,16 @@ class CMovie extends CDatabase{
             $filter .= "M.title LIKE ?";
             $parameter[] = $search['title'];
         } 
+        if( !empty($search['title'])){
+            $filter .= isset ($filter)? ' AND ' : '';
+            $filter .= "M.title LIKE ?";
+            $parameter[] = $search['title'];
+        } 
+        if( isset($search['limit'])){
+            $limit .= " LIMIT {$search['start_page']} , {$_SESSION['show_movies_per_page']} ";
+        } 
         $filter = isset ($filter)? ' WHERE ' . $filter : '';
-        $return = array( 'sql' => $filter, 'parameter' => $parameter );
-        
+        $return = array( 'sql' => $filter, 'limit' => $limit, 'parameter' => $parameter );
         return $return;
     } // end search
     
@@ -125,12 +133,28 @@ class CMovie extends CDatabase{
                     INNER JOIN Genre AS G
                       ON M2G.idGenre = G.id" 
                 . $filter['sql'] 
-                . " GROUP BY M.id;";
+                . " GROUP BY M.id"
+                . $filter['limit'] . ";";
         $return = $this->query_DB($sql, $filter['parameter']);
         return $return;
     }// end get_movies()
      
-    
+    public function paginering($search){
+        $filter = $this->filter_search($search);
+        $sql = "SELECT 
+                    COUNT(DISTINCT M.id ) AS posts
+                  FROM Movie AS M
+                    LEFT OUTER JOIN Movie2Genre AS M2G
+                      ON M.id = M2G.idMovie
+                    INNER JOIN Genre AS G
+                      ON M2G.idGenre = G.id" 
+                . $filter['sql'] 
+                . " GROUP BY M.id;";
+        $return = $this->query_DB($sql, $filter['parameter']);
+        return count($return);
+        
+        
+    }
     
         
 } // end CMovie

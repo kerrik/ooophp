@@ -326,3 +326,13 @@ ul.dice li.dice-6 { background-position:    0px 0px; }
 .clear_left{
     clear: left;
 }
+.page_value{
+    width: 1rem;
+    text-align: center;
+}
+.page_value a{ 
+    color: black;
+}
+.page_value:hover{
+    background: lightsalmon;
+}
