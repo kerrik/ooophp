@@ -24,7 +24,7 @@ class CDatabase {
 public function __construct() {
    $this->DB_open(); 
    $this->create_db( TANGO_SOURCE_PATH . 'CDatabase/dbcreate.php');
-  // $this->create_db();
+   //$this->create_db();
 
 }
 public function DB_open(){
@@ -60,7 +60,8 @@ public function query_DB( $sql, $parametrar = array(), $debug = false ){
     $this->stm->execute($parametrar);
     return $this->stm->fetchAll();
 }//end queryDB
-    protected function create_db($path){
+
+protected function create_db($path){
     include $path;
     $sql = '';
     foreach($dbcreate as $query){

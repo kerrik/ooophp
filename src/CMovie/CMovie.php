@@ -55,6 +55,12 @@ class CMovie extends CDatabase{
                     $this->html= $CMovieShowOne->html; 
                     return true;
                  break;
+                case 'new':
+                    $tango->set_property('title', "Ny film");
+                    $CMovieNew = new CMovieNew;
+                    $this->html= $CMovieNew->html; 
+                    return true;
+                break;
             } // end switch
         }else{
             $tango->set_property('title', "Visa filmdatabas");
@@ -73,10 +79,8 @@ class CMovie extends CDatabase{
      * funktion för att skapa knappar för val av filmgene
      */
         $sql = '
-        SELECT DISTINCT G.name
-        FROM Genre AS G
-            INNER JOIN Movie2Genre AS M2G
-                ON G.id = M2G.idGenre;';
+        SELECT *
+        FROM Genre ;';
         
         $result = $this->query_DB($sql);
         return $result;
@@ -89,19 +93,19 @@ class CMovie extends CDatabase{
         $limit = null;
         $filter = null ;
         $parameter = array();
-        if( $search['genre'] <> 'alla'){
+        if( isset($search['genre']) && $search['genre'] <> 'alla'){
             $filter .= isset ($filter)? ' AND ' : '';
-            $filter .= "G.name=?";
+            $filter .= "G.name LIKE ?";
             $parameter[] = $search['genre'];
         } 
         if( !empty($search['year1'])){
             $filter .= isset ($filter)? ' AND ' : '';
-            $filter .= "M.YEAR>=?";
+            $filter .= "M.year>=?";
             $parameter[] = $search['year1'];
         } 
         if( !empty($search['year2'])){
             $filter .= isset ($filter)? ' AND ' : '';
-            $filter .= "M.YEAR<=?";
+            $filter .= "M.year<=?";
             $parameter[] = $search['year2'];
         } 
         if( !empty($search['title'])){
@@ -114,8 +118,13 @@ class CMovie extends CDatabase{
             $filter .= "M.title LIKE ?";
             $parameter[] = $search['title'];
         } 
+        if( !empty($search['id'])){
+            $filter .= isset ($filter)? ' AND ' : '';
+            $filter .= "M.id LIKE ?";
+            $parameter[] = $search['id'];
+        } 
         if( isset($search['limit'])){
-            $limit .= " LIMIT {$search['start_page']} , {$_SESSION['show_movies_per_page']} ";
+            $limit .= " LIMIT {$search['start_page']} , {$search['movies_per_page']} ";
         } 
         $filter = isset ($filter)? ' WHERE ' . $filter : '';
         $return = array( 'sql' => $filter, 'limit' => $limit, 'parameter' => $parameter );
@@ -141,20 +150,74 @@ class CMovie extends CDatabase{
      
     public function paginering($search){
         $filter = $this->filter_search($search);
-        $sql = "SELECT 
+        $sql = <<<EOD
+                SELECT 
                     COUNT(DISTINCT M.id ) AS posts
                   FROM Movie AS M
                     LEFT OUTER JOIN Movie2Genre AS M2G
                       ON M.id = M2G.idMovie
                     INNER JOIN Genre AS G
-                      ON M2G.idGenre = G.id" 
-                . $filter['sql'] 
-                . " GROUP BY M.id;";
+                      ON M2G.idGenre = G.id 
+                    {$filter['sql']} 
+                    GROUP BY M.id;
+EOD
+                ;
         $return = $this->query_DB($sql, $filter['parameter']);
         return count($return);
         
         
     }
     
+    public function update_movie($parameter){
+        $sql = <<<EOD
+               UPDATE Movie SET
+                title = ?,
+                director = ?,
+                length = ?,
+                year = ?,
+                plot = ?,
+                image = ?,
+                subtext = ?,
+                speech = ?
+              {$parameter['sql']}
+EOD
+       ;
+        $return = $this->query_DB($sql, $parameter['value']);
+        return $return;
+    } // end update_movie()
+    
+    
+     public function new_movie($parameter){
+        $sql = <<<EOD
+            INSERT INTO Movie(
+                title,
+                director,
+                length,
+                year,
+                plot,
+                image,
+                subtext,
+                speech)
+            VALUES( ?, ?, ?, ?, ?, ?, ?, ?);
+              {$parameter['sql']}
+EOD
+       ;
+        $return = $this->query_DB($sql, $parameter['value'], true);
+        $return = self::$db->lastInsertId();
+        echo "nytt id {$return}";
+                
+        return $return;
+    }
+    public function delete_g_to_m($parameter){
+        $sql = "DELETE FROM Movie2Genre WHERE idMovie = ?;";
+        $return = $this->query_DB($sql, $parameter);
+        return $return;
+        
+    }
+    public function update_g2m($parameter){
+        $sql = "INSERT INTO Movie2Genre (idMovie, idGenre) VALUES ( ?, ?);";
+        $return = $this->query_DB($sql, $parameter);
+        return $return;
+    }
         
 } // end CMovie

@@ -17,8 +17,8 @@ $dbcreate[] = array('type'=>'TABLE', 'name'=>'Movie' , 'sql'=> <<<EOF
     id INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
     title VARCHAR(100) NOT NULL,
     director VARCHAR(100),
-    LENGTH INT DEFAULT NULL, -- Length in minutes
-    YEAR INT NOT NULL DEFAULT 1900,
+    length INT DEFAULT NULL, -- Length in minutes
+    year INT NOT NULL DEFAULT 1900,
     plot TEXT, -- Short intro to the movie
     image VARCHAR(100) DEFAULT NULL, -- Link to an image
     subtext CHAR(3) DEFAULT NULL, -- swe, fin, en, etc
@@ -28,7 +28,7 @@ $dbcreate[] = array('type'=>'TABLE', 'name'=>'Movie' , 'sql'=> <<<EOF
 ) ENGINE INNODB CHARACTER SET utf8; 
 EOF
     , 'data'=> <<<EOF
-    INSERT INTO Movie (title, YEAR, image) VALUES
+    INSERT INTO Movie (title, year, image) VALUES
     ('Pulp fiction', 1994, 'img/movie/pulp-fiction.jpg'),
     ('American Pie', 1999, 'img/movie/american-pie.jpg'),
     ('Pokémon The Movie 2000', 1999, 'img/movie/pokemon.jpg'),  
@@ -44,14 +44,14 @@ $dbcreate[] = array('type'=>'TABLE', 'name'=>'Gengre' , 'sql'=> <<<EOF
   name CHAR(20) NOT NULL -- crime, svenskt, college, drama, etc
 ) ENGINE INNODB CHARACTER SET utf8;
 EOF
-    , 'data'=> <<<EOF
+    , 'data'=> ''/*<<<EOF
     INSERT INTO Genre (name) VALUES 
   ('comedy'), ('romance'), ('college'), 
   ('crime'), ('drama'), ('thriller'), 
   ('animation'), ('adventure'), ('family'), 
-  ('svenskt'), ('action'), ('horror')
+  ('svenskt'), ('action'), ('horror'),('ej satt')
 ;
-EOF
+EOF*/
     ); //end $dbcreate
 $dbcreate[] = array('type'=>'TABLE', 'name'=>'Movie2Gengre' , 'sql'=> <<<EOF
   CREATE TABLE IF NOT EXISTS Movie2Genre

@@ -70,12 +70,12 @@ $main_menu = array(
     'id'=>'',
     'vertical'=>false,
     'choise'=>array(
-        'home'  => array('text'=>'Home',  'url'=>'me.php?p=home', 'class'=>''),
-       'dice' => array('text'=>'Dice', 'url'=>'dice.php?p=dice', 'class'=>''),
-       'movie' => array('text'=>'Movie', 'url'=>'movie.php?p=movie', 'class'=>''),
-       'red' => array('text'=>'Redovisning', 'url'=>'redovisning.php?p=red', 'class'=>''),
+        'home'  => array('text'=>'Home',  'url'=>'me.php', 'class'=>''),
+       'dice' => array('text'=>'Dice', 'url'=>'dice.php', 'class'=>''),
+       'movie' => array('text'=>'Movie', 'url'=>'movie.php', 'class'=>''),
+       'red' => array('text'=>'Redovisning', 'url'=>'redovisning.php', 'class'=>''),
        'om' => array('text'=>'Om', 'url'=>'om.php?p=om', 'class'=>''),
-       'source'  => array('text'=>'Källkod',  'url'=>'source.php?p=source', 'class'=>''),
+       'source'  => array('text'=>'Källkod',  'url'=>'source.php', 'class'=>''),
         
     )
 );
