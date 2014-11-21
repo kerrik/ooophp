@@ -46,7 +46,7 @@ EOD
                 . "<input type='text' class='input left' name='year' value='{$result['year']}'></p>";    
         $this->html .= " <p><label class='label left' for='speech'>Språk:</label>"
                 . "<input type='text' class='input left' name='speech' value='{$result['speech']}'></p>";
-        $this->html .= " <p><label class='label left' for='image'>Bild:</label>"
+        $this->html .= " <p><label class='label left' for='image'>Bild: (utan mapp)</label>"
                 . "<input type='text' class='input left' name='image' value='{$result['image']}'></p>";
         $this->html .= " <p><label class='label left' for='plot'>Handling:</label></p>"
                 . "<p><textarea   class='plot left' name='plot'>{$result['plot']}</textarea></p></div>";
@@ -88,7 +88,7 @@ EOD
         $parameter['value'][] = 'test';
         $parameter['value'][] = $_POST['year'];
         $parameter['value'][] = $_POST['plot'];
-        $parameter['value'][] = $_POST['image'];
+        $parameter['value'][] = "img/movie/" . $_POST['image'];
         $parameter['value'][] = 'null';
         $parameter['value'][] = $_POST['speech'];
         $id =  $movie->new_movie($parameter);
